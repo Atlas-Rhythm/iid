@@ -1,0 +1,16 @@
+[package]
+name = "iid"
+version = "0.1.0"
+authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
+edition = "2018"
+license = "Apache-2.0"
+description = "Dead simple integer IDs"
+
+[dependencies]
+once_cell = "1"
+parking_lot = { version = "0.10", optional = true }
+rand = "0.7"
+
+[features]
+default = []
+pl = ["parking_lot", "once_cell/parking_lot"]
