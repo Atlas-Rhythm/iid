@@ -10,27 +10,24 @@ jobs:
           toolchain: stable
           components: clippy, rustfmt
           override: true
-      - uses: actions/cache@v1
-        with:
-          path: ~/.cargo/registry
-          key: cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-      - uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: cargo-index-${{ hashFiles('**/Cargo.lock') }}
-      - uses: actions/cache@v1
-        with:
-          path: target
-          key: cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
       - name: Run tests
         uses: actions-rs/cargo@v1
         with:
           command: test
+      - name: Run tests (parking_lot)
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --features pl
       - name: Check for clippy warnings
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
+      - name: Check for clippy warnings (parking_lot)
+        uses: actions-rs/clippy-check@v1
+        with:
+          args: --features pl
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Check formatting
         uses: actions-rs/cargo@v1
         with:
